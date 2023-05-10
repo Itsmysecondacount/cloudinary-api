@@ -1,0 +1,26 @@
+@import 'variables';
+
+.drop-zone {
+	height: 300px;
+	width: 400px;
+	background-color: $background-color;
+	border-radius: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 50px;
+	margin: 5px;
+	border: 4px dotted rgb(82, 82, 82);
+	cursor: pointer;
+	box-shadow: 0px 5px 20px 0px rgb(127, 127, 127);
+}
+
+.drop-zone-droping {
+	background-color: $background-active-color;
+}
+
+aside {
+	.warning {
+		color: red;
+	}
+}
