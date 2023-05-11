@@ -1,19 +1,44 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import '../Styles/MyDropZone.scss';
+import { Cloudinary } from '@cloudinary/url-gen';
+import { backgroundRemoval } from '@cloudinary/url-gen/actions/effect';
 
-export default function MyDropZone({ uploadedFileUrl, setUploadedFileUrl }) {
+const cld = new Cloudinary({
+	cloud: {
+		cloudName: 'ds84at0ef',
+	},
+	url: {
+		secure: true, // force https, set to false to force http
+	},
+});
+
+export default function MyDropZone({
+	uploadedFileUrl,
+	setUploadedFileUrl,
+	setModifiedURL,
+	setPublicId,
+	publicId,
+}) {
 	const onDrop = useCallback((acceptedFiles) => {
 		const formData = new FormData();
 		formData.append('file', acceptedFiles[0]);
 		formData.append('upload_preset', 'ml_default');
+		formData.append('api_key', '969758484244255');
 
 		axios
 			.post('https://api.cloudinary.com/v1_1/ds84at0ef/image/upload', formData)
 			.then((response) => {
-				console.log(response.data.secure_url);
+				console.log(response, 'original');
+				setPublicId(response.data.public_id);
 				setUploadedFileUrl(response.data.secure_url);
+				const imageWhitoutBackground = cld
+					.image(response.data.public_id)
+					.effect(backgroundRemoval());
+
+				console.log(imageWhitoutBackground.toURL(), 'sin background');
+				setModifiedURL(imageWhitoutBackground.toURL());
 			})
 			.catch((error) => {
 				console.log(error);

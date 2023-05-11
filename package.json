@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "^1.10.0",
     "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "sass": "^1.62.1",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "two-up-element": "1.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
